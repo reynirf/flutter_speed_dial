@@ -654,7 +654,7 @@ class _ChildrensOverlay extends StatelessWidget {
               child: SingleChildScrollView(
                 physics: !widget.enableScrolling
                     ? const NeverScrollableScrollPhysics()
-                    : null,
+                    : const AlwaysScrollableScrollPhysics(),
                 child: _buildColumnOrRow(
                   widget.direction.isUp || widget.direction.isDown,
                   crossAxisAlignment: widget.switchLabelPosition
