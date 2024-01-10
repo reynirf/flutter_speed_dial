@@ -1,12 +1,13 @@
 import 'dart:io';
 import 'dart:math';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import 'animated_child.dart';
-import 'global_key_extension.dart';
 import 'animated_floating_button.dart';
 import 'background_overlay.dart';
+import 'global_key_extension.dart';
 import 'speed_dial_child.dart';
 import 'speed_dial_direction.dart';
 
@@ -168,6 +169,9 @@ class SpeedDial extends StatefulWidget {
   /// Use mini fab for the speed dial
   final bool mini;
 
+  /// Enable scrolling when the dial is open
+  final bool enableScrolling;
+
   const SpeedDial({
     Key? key,
     this.children = const [],
@@ -218,6 +222,7 @@ class SpeedDial extends StatefulWidget {
     this.spaceBetweenChildren,
     this.spacing,
     this.animationCurve,
+    this.enableScrolling = false,
   }) : super(key: key);
 
   @override
@@ -646,15 +651,20 @@ class _ChildrensOverlay extends StatelessWidget {
                       widget.direction.isUp ? widget.spacing! : 0,
                     )
                   : null,
-              child: _buildColumnOrRow(
-                widget.direction.isUp || widget.direction.isDown,
-                crossAxisAlignment: widget.switchLabelPosition
-                    ? CrossAxisAlignment.start
-                    : CrossAxisAlignment.end,
-                mainAxisSize: MainAxisSize.min,
-                children: widget.direction.isDown || widget.direction.isRight
-                    ? _getChildrenList().reversed.toList()
-                    : _getChildrenList(),
+              child: SingleChildScrollView(
+                physics: !widget.enableScrolling
+                    ? const NeverScrollableScrollPhysics()
+                    : null,
+                child: _buildColumnOrRow(
+                  widget.direction.isUp || widget.direction.isDown,
+                  crossAxisAlignment: widget.switchLabelPosition
+                      ? CrossAxisAlignment.start
+                      : CrossAxisAlignment.end,
+                  mainAxisSize: MainAxisSize.min,
+                  children: widget.direction.isDown || widget.direction.isRight
+                      ? _getChildrenList().reversed.toList()
+                      : _getChildrenList(),
+                ),
               ),
             ),
           ),
