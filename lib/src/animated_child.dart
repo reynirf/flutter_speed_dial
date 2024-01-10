@@ -109,7 +109,7 @@ class AnimatedChild extends AnimatedWidget {
               onLongPress:
                   onLongPress == null ? null : () => performAction(true),
               child: Padding(
-                padding: const EdgeInsets.symmetric(
+                padding: EdgeInsets.symmetric(
                     vertical: 5.0, left: child == null ? 0 : 8, right: 8),
                 child: Text(label!, style: labelStyle),
               ),
